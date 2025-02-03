@@ -2,6 +2,7 @@ const date = document.querySelector(".date");
 const place = document.querySelector(".quantite");
 const ajouter = document.querySelector("#add");
 const reservations = document.querySelector(".reservations");
+const error = document.querySelector(".error");
 let datesToDisplay = [
     {value:"2024-01-06"},
     {value:"2024-01-13"},
@@ -56,34 +57,43 @@ date.addEventListener("change", (e) => {
 });
 
 ajouter.addEventListener("click" ,(e) => {
-    let valeurDate = date.value;
+    if(checkValidNumber(place.value)) {
+        let valeurDate = date.value;
 
-    let placeR = place.value;
-    let x = datesToDisplay.findIndex(aDate => aDate.value === valeurDate);
-    datesToDisplay.splice(x, 1);
-    insertDates();
-    ajouter.classList.add("disabled");
-
-    let reservationDiv = document.createElement("div");
-    reservationDiv.classList.add("reservation");
-    let sup = document.createElement("button");
-    sup.textContent = "Supprimer";
-    sup.classList.add("remove");
-    let dateDiv = document.createElement("div");
-    dateDiv.textContent = valeurDate;
-    let placeDiv = document.createElement("div");
-    placeDiv.textContent = "le nombre de place est de "+ placeR;
-    sup.addEventListener("click", (e) => {
-        reservationDiv.remove();
-        datesToDisplay.push({value: valeurDate});
+        let placeR = place.value;
+        let x = datesToDisplay.findIndex(aDate => aDate.value === valeurDate);
+        datesToDisplay.splice(x, 1);
         insertDates();
+        ajouter.classList.add("disabled");
 
-    });
-    reservationDiv.appendChild(dateDiv);
-    reservationDiv.appendChild(placeDiv);
-    reservationDiv.appendChild(sup);
-    reservations.appendChild(reservationDiv);
+        let reservationDiv = document.createElement("div");
+        reservationDiv.classList.add("reservation");
+        let sup = document.createElement("button");
+        sup.textContent = "Supprimer";
+        sup.classList.add("remove");
+        let dateDiv = document.createElement("div");
+        dateDiv.textContent = valeurDate;
+        let placeDiv = document.createElement("div");
+        placeDiv.textContent = "le nombre de place est de " + placeR;
+        sup.addEventListener("click", (e) => {
+            reservationDiv.remove();
+            datesToDisplay.push({value: valeurDate});
+            insertDates();
+
+        });
+        reservationDiv.appendChild(dateDiv);
+        reservationDiv.appendChild(placeDiv);
+        reservationDiv.appendChild(sup);
+        reservations.appendChild(reservationDiv);
+        error.innerHTML = "";
+    } else {
+        error.innerHTML = "le nombre de place est invalide";
+    }
+
 });
+function checkValidNumber(number) {
+    return number > 0;
+}
 
 
 
