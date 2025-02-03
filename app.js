@@ -21,7 +21,7 @@ function checkvalue(value) {
 }
 function insertDates() {
 
-    for(let i = date.options.length - 1 ; i >= 1 ; i--) {
+    for(let i = date.options.length - 1 ; i >= 0 ; i--) {
         date.innerHTML = "";
     }
     let option = document.createElement("option");
@@ -41,7 +41,7 @@ function insertDates() {
 insertDates(datesToDisplay);
 
 date.addEventListener("change", (e) => {
-    if(checkvalue(e.target.value, datesToDisplay) === true) {
+    if(checkvalue(e.target.value) === true) {
         console.log(e.target.value);
         console.log("Date exists");
         ajouter.disabled = false;
